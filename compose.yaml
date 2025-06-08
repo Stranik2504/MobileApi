@@ -1,0 +1,6 @@
+﻿services:
+  mobileapi:
+    image: mobileapi
+    build:
+      context: .
+      dockerfile: MobileApi/Dockerfile
