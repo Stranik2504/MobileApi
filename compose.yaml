@@ -4,3 +4,7 @@
     build:
       context: .
       dockerfile: MobileApi/Dockerfile
+    volumes:
+      - ./MobileApi/files:/app/files
+    ports:
+      - "5010:8080"
