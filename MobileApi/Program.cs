@@ -50,8 +50,15 @@ await migrationManager.Migrate();
     app.UseSwaggerUI();
 }*/
 
-app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwagger(options =>
+{
+    options.RouteTemplate = "mobile/{documentName}/swagger.json";
+});
+app.UseSwaggerUI(options =>
+{
+    options.RoutePrefix = "api";
+    options.SwaggerEndpoint("/mobile/v1/swagger.json", "MobileAPI v1");
+});
 
 app.UseHttpsRedirection();
 
