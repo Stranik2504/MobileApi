@@ -48,7 +48,7 @@ public class MigrationManager(IDatabase db, int version)
             "user_solution",
             true,
             new DbParam("id", typeof(int)) { PrimaryKey = true, Unique = true, AutoIncrement = true },
-            new DbParam("user_id", typeof(string)) { CanNull = false },
+            new DbParam("user_id", typeof(int)) { CanNull = false },
             new DbForeignKey("user_id", "users", "id"),
             new DbParam("solution", typeof(string)) { CanNull = true }
         );

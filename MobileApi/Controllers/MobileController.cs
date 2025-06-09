@@ -31,9 +31,14 @@ public class MobileController(
 
         var list = new List<SolutionList>();
 
-        await foreach (var item in _database.GetAllRecordsByField("tasks", "user_ids", "{ -1 }"))
+        await foreach (var item in _database.GetAllRecords("tasks"))
         {
             if (string.IsNullOrWhiteSpace(item.Id))
+                continue;
+
+            var userIds = item.Fields.GetString("user_ids");
+
+            if (userIds.Replace(" ", "") != "{-1}")
                 continue;
 
             var task = new SolutionList()
