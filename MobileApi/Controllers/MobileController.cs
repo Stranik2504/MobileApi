@@ -936,6 +936,9 @@ public class MobileController(
             return null;
         }
 
+        _logger.LogInformation(username);
+        _logger.LogInformation(password);
+
         var record = await _database.GetRecord("users", new SearchField(username, "username", con: Connection.AND), new SearchField(password, "password"));
 
         if (string.IsNullOrWhiteSpace(record.Id))
