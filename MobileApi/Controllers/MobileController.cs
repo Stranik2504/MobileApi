@@ -91,6 +91,11 @@ public class MobileController(
                 Description = taskRecord.Fields.GetString("description"),
             };
 
+            if (list.Any(x => x.Id == task.Id))
+            {
+                _logger.LogInformation("[MobileController]: Task with Id {TaskId} already exists in the list", task.Id);
+                continue; // Skip if task already exists in the list
+            }
             list.Add(task);
         }
 
