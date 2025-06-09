@@ -52,7 +52,7 @@ public class MigrationManager(IDatabase db, int version)
             new DbParam("description", typeof(string)) { CanNull = true },
             new DbParam("full_description", typeof(string)) { CanNull = true },
             new DbParam("count_attempts", typeof(int)) { CanNull = false },
-            new DbParam("all", typeof(bool)) { CanNull = false },
+            new DbParam("for_all", typeof(bool)) { CanNull = false },
             new DbParam("task_items_ids", typeof(string)) { CanNull = false }
         );
 

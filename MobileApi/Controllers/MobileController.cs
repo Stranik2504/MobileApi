@@ -40,7 +40,7 @@ public class MobileController(
             if (string.IsNullOrWhiteSpace(item.Id))
                 continue;
 
-            var forAll = item.Fields.GetInt("all");
+            var forAll = item.Fields.GetInt("for_all");
 
             if (forAll != -1)
                 continue;
@@ -806,7 +806,7 @@ public class MobileController(
                 { "description", request.SolutionList.Description },
                 { "full_description", request.SolutionList.FullDescription },
                 { "count_attempts", -1 },
-                { "all", request.Users.Count == 0 ? 1 : 0 },
+                { "for_all", request.Users.Count == 0 ? 1 : 0 },
                 { "task_items_ids", "" },
             }
         );
