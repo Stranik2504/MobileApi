@@ -1,3 +1,4 @@
+using System.Reflection;
 using Database;
 using MobileApi.Utils;
 
@@ -34,7 +35,19 @@ builder.Services.AddSingleton<IDatabase>(x =>
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "MobileAPI",
+        Version = "v1"
+    });
+
+    options.SupportNonNullableReferenceTypes();
+
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
 
 var app = builder.Build();
 
@@ -56,7 +69,7 @@ app.UseSwagger(options =>
 });
 app.UseSwaggerUI(options =>
 {
-    options.RoutePrefix = "api";
+    options.RoutePrefix = "mobile";
     options.SwaggerEndpoint("/mobile/v1/swagger.json", "MobileAPI v1");
 });
 

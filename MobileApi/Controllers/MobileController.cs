@@ -42,7 +42,7 @@ public class MobileController(
 
             var forAll = item.Fields.GetInt("for_all");
 
-            if (forAll != -1)
+            if (forAll != 1)
                 continue;
 
             var task = new SolutionList()
@@ -617,6 +617,7 @@ public class MobileController(
                 countCorrect++;
 
             solution.Add(isCorrect);
+            i++;
         }
 
 
@@ -935,9 +936,6 @@ public class MobileController(
             _logger.LogWarning("[MobileController]: Token is null or empty");
             return null;
         }
-
-        _logger.LogInformation(username);
-        _logger.LogInformation(password);
 
         var record = await _database.GetRecord("users", new SearchField(username, "username", con: Connection.AND), new SearchField(password, "password"));
 
