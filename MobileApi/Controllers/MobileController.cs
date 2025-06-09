@@ -733,31 +733,11 @@ public class MobileController(
             return NotFound("User isn't found or not admin");
         }
 
-        var res = await _database.DeleteByField("task_items", "task_id", solutionId.ToString());
+        await _database.DeleteByField("task_items", "task_id", solutionId.ToString());
+        await _database.DeleteByField("user_solution", "task_id", solutionId.ToString());
+        await _database.DeleteByField("task_user", "task_id", solutionId.ToString());
 
-        if (!res)
-        {
-            _logger.LogError("[MobileController]: Failed to delete task items for solution");
-            return BadRequest(false);
-        }
-
-        res = await _database.DeleteByField("user_solution", "task_id", solutionId.ToString());
-
-        if (!res)
-        {
-            _logger.LogError("[MobileController]: Failed to delete user solutions for solution");
-            return BadRequest(false);
-        }
-
-        res = await _database.DeleteByField("task_user", "task_id", solutionId.ToString());
-
-        if (!res)
-        {
-            _logger.LogError("[MobileController]: Failed to delete task user records for solution");
-            return BadRequest(false);
-        }
-
-        res = await _database.Delete("tasks", solutionId.ToString());
+        var res = await _database.Delete("tasks", solutionId.ToString());
 
         if (!res)
         {
