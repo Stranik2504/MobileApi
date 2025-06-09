@@ -548,7 +548,7 @@ public class MobileController(
 
     [HttpPost("solutions/{solutionId:int}/submit")]
     public async Task<ActionResult<bool>> SubmitAnswers(
-        [FromBody] List<int> answers,
+        [FromBody] AnswersRequest request,
         [FromRoute] int solutionId,
         [FromHeader] int userId,
         [FromHeader] string? token
@@ -589,7 +589,7 @@ public class MobileController(
         var countCorrect = 0;
         var i = 0;
 
-        if (answers.Count != taskIds.Count)
+        if (request.Answers.Count != taskIds.Count)
         {
             _logger.LogWarning("[MobileController]: Answers count does not match options count");
             return BadRequest("Answers count does not match options count");
@@ -607,13 +607,13 @@ public class MobileController(
 
             var options = JsonConvert.DeserializeObject<List<AnswerOption>>(taskItemRecord.Fields.GetString("options")) ?? [];
 
-            if (answers[i] < 0 || answers[i] >= options.Count)
+            if (request.Answers[i] < 0 || request.Answers[i] >= options.Count)
             {
                 _logger.LogWarning("[MobileController]: Answer index out of range for taskId: {TaskId}", taskId);
                 return BadRequest($"Answer index out of range for taskId: {taskId}");
             }
 
-            var isCorrect = options[answers[i]].IsCorrect;
+            var isCorrect = options[request.Answers[i]].IsCorrect;
 
             if (isCorrect)
                 countCorrect++;
