@@ -162,6 +162,8 @@ public class MobileController(
             list.Add(task);
         }
 
+        list.Reverse();
+
         _logger.LogInformation("[MobileController]: GetSolutionTasks end and return result");
         return Ok(list);
     }
