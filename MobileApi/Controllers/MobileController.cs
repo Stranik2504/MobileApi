@@ -583,7 +583,7 @@ public class MobileController(
         }
 
         // task_items_ids
-        var record = await _database.GetRecord("tasks", "task_id", solutionId.ToString());
+        var record = await _database.GetRecordById("tasks", solutionId.ToString());
         var taskIds = JsonConvert.DeserializeObject<List<int>>(record.Fields.GetString("task_items_ids")) ?? [];
         var solution = new List<bool>(taskIds.Count);
         var countCorrect = 0;
@@ -728,15 +728,7 @@ public class MobileController(
             return NotFound("User isn't found or not admin");
         }
 
-        var record = await _database.GetRecord("tasks", "id", solutionId.ToString());
-
-        if (string.IsNullOrWhiteSpace(record.Id))
-        {
-            _logger.LogWarning("[MobileController]: Solution not found");
-            return NotFound("Solution not found");
-        }
-
-        var res = await _database.Delete("tasks", record.Id);
+        var res = await _database.Delete("tasks", solutionId.ToString());
 
         if (!res)
         {
