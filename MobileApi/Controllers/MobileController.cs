@@ -344,7 +344,7 @@ public class MobileController(
             new SearchField(solutionId.ToString(), "task_id")
         );
 
-        if (string.IsNullOrWhiteSpace(taskRecord.Id) && taskRecord.Fields.GetInt("for_all") != 1)
+        if (string.IsNullOrWhiteSpace(taskRecord.Id) && record.Fields.GetInt("for_all") != 1)
         {
             _logger.LogWarning("[MobileController]: Task not found for solution");
             return NotFound("Task not found for solution");
@@ -452,7 +452,9 @@ public class MobileController(
             new SearchField(solutionId.ToString(), "task_id")
         );
 
-        if (string.IsNullOrWhiteSpace(taskRecord.Id) && taskRecord.Fields.GetInt("for_all") != 1)
+        var record = await _database.GetRecord("tasks", "id", solutionId.ToString());
+
+        if (string.IsNullOrWhiteSpace(taskRecord.Id) && record.Fields.GetInt("for_all") != 1)
         {
             _logger.LogWarning("[MobileController]: Task not found for solution");
             return NotFound("Task not found for solution");
