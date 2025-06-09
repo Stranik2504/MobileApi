@@ -293,8 +293,8 @@ public class MobileController(
         var userInfo = new UserInfo()
         {
             Username = user.Username,
-            StatPass = user.Count > 0 ? user.PassCount / user.Count * 100 : 100,
-            StatError = user.CountTasks > 0 ? user.ErrorCount / user.CountTasks * 100 : 0
+            StatPass = user.Count > 0 ? (int)((user.PassCount / (float)user.Count) * 100) : 100,
+            StatError = user.CountTasks > 0 ? (int)((user.ErrorCount / (float)user.CountTasks) * 100) : 0
         };
 
         _logger.LogInformation("[MobileController]: GetUserInfo end and return user info");
