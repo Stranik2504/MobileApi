@@ -157,9 +157,6 @@ public class MySql(string host, int port, string database, string user, string p
 
             command.Parameters.Add(new MySqlParameter(currFieldName, field.Field));
 
-            /*if (field.TypeField == typeof(string))
-                currFieldName = $"'{currFieldName}'";*/
-
             if (field.Match == Match.Partial)
                 request += $"%{currFieldName}%";
             else if (field.Match == Match.Max)
