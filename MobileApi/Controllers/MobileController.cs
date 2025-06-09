@@ -848,6 +848,8 @@ public class MobileController(
 
         if (request.Users.Count > 0)
         {
+            _logger.LogInformation(JsonConvert.SerializeObject(request.Users));
+
             foreach (var userIdToAdd in request.Users)
             {
                 var taskUserResult = await _database.Create(
