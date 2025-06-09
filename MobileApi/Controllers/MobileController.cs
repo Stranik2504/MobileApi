@@ -858,6 +858,14 @@ public class MobileController(
             return BadRequest(false);
         }
 
+        await foreach (var u in _database.GetAllRecordsByField("users", "is_admin", "1"))
+        {
+            if (string.IsNullOrWhiteSpace(u.Id))
+                continue;
+
+            request.Users.Add(new User() { Id = u.Id.ToInt(), Username = u.Fields.GetString("username") });
+        }
+
         if (request.Users.Count > 0)
         {
             foreach (var userIdToAdd in request.Users)
