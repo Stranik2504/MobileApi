@@ -82,7 +82,7 @@ public class MobileController(
                 continue;
 
             var taskId = item.Fields.GetString("task_id");
-            var taskRecord = await _database.GetRecord("tasks", new SearchField("id", taskId));
+            var taskRecord = await _database.GetRecordById("tasks", taskId);
 
             var task = new SolutionList()
             {
@@ -140,7 +140,7 @@ public class MobileController(
             if (taskId <= 0)
                 continue;
 
-            var taskRecord = await _database.GetRecord("tasks", new SearchField("id", taskId.ToString()));
+            var taskRecord = await _database.GetRecordById("tasks", taskId.ToString());
 
             if (string.IsNullOrWhiteSpace(taskRecord.Id))
                 continue;
@@ -340,8 +340,8 @@ public class MobileController(
         }
 
         var taskRecord = await _database.GetRecord("task_user",
-            new SearchField("user_id", userId.ToString(), con: Connection.AND),
-            new SearchField("task_id", solutionId.ToString())
+            new SearchField(userId.ToString(), "user_id", con: Connection.AND),
+            new SearchField(solutionId.ToString(), "task_id")
         );
 
         if (string.IsNullOrWhiteSpace(taskRecord.Id))
@@ -448,8 +448,8 @@ public class MobileController(
         }
 
         var taskRecord = await _database.GetRecord("task_user",
-            new SearchField("user_id", userId.ToString(), con: Connection.AND),
-            new SearchField("task_id", solutionId.ToString())
+            new SearchField(userId.ToString(), "user_id", con: Connection.AND),
+            new SearchField(solutionId.ToString(), "task_id")
         );
 
         if (string.IsNullOrWhiteSpace(taskRecord.Id))
@@ -656,8 +656,8 @@ public class MobileController(
         }
 
         var taskUserRecord = await _database.GetRecord("task_user",
-            new SearchField("user_id", userId.ToString(), con: Connection.AND),
-            new SearchField("task_id", solutionId.ToString())
+            new SearchField(userId.ToString(), "user_id", con: Connection.AND),
+            new SearchField(solutionId.ToString(), "task_id")
         );
 
         if (string.IsNullOrWhiteSpace(taskUserRecord.Id))
@@ -898,7 +898,7 @@ public class MobileController(
             return null;
         }
 
-        var record = await _database.GetRecord("users", new SearchField("id", userId.ToString(), con: Connection.AND), new SearchField("token", token));
+        var record = await _database.GetRecord("users", new SearchField(userId.ToString(), "id", con: Connection.AND), new SearchField(token, "token"));
 
         if (string.IsNullOrWhiteSpace(record.Id))
         {
@@ -936,7 +936,7 @@ public class MobileController(
             return null;
         }
 
-        var record = await _database.GetRecord("users", new SearchField("username", username, con: Connection.AND), new SearchField("password", password));
+        var record = await _database.GetRecord("users", new SearchField(username, "username", con: Connection.AND), new SearchField(password, "password"));
 
         if (string.IsNullOrWhiteSpace(record.Id))
         {
