@@ -898,7 +898,7 @@ public class MobileController(
             return null;
         }
 
-        var record = await _database.GetRecord("users", new SearchField("id", userId.ToString()), new SearchField("token", token));
+        var record = await _database.GetRecord("users", new SearchField("id", userId.ToString(), con: Connection.AND), new SearchField("token", token));
 
         if (string.IsNullOrWhiteSpace(record.Id))
         {
@@ -936,7 +936,7 @@ public class MobileController(
             return null;
         }
 
-        var record = await _database.GetRecord("users", new SearchField("username", username), new SearchField("password", password));
+        var record = await _database.GetRecord("users", new SearchField("username", username, con: Connection.AND), new SearchField("password", password));
 
         if (string.IsNullOrWhiteSpace(record.Id))
         {
