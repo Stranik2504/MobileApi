@@ -45,6 +45,18 @@ public class MigrationManager(IDatabase db, int version)
         );
 
         await _db.CreateTable(
+            "tasks",
+            true,
+            new DbParam("id", typeof(int)) { PrimaryKey = true, Unique = true, AutoIncrement = true },
+            new DbParam("title", typeof(string)) { CanNull = false },
+            new DbParam("description", typeof(string)) { CanNull = true },
+            new DbParam("full_description", typeof(string)) { CanNull = true },
+            new DbParam("count_attempts", typeof(int)) { CanNull = false },
+            new DbParam("all", typeof(bool)) { CanNull = false },
+            new DbParam("task_items_ids", typeof(string)) { CanNull = false }
+        );
+
+        await _db.CreateTable(
             "user_solution",
             true,
             new DbParam("id", typeof(int)) { PrimaryKey = true, Unique = true, AutoIncrement = true },
@@ -63,18 +75,6 @@ public class MigrationManager(IDatabase db, int version)
             new DbForeignKey("task_id", "tasks", "id"),
             new DbParam("question", typeof(string)) { CanNull = false },
             new DbParam("options", typeof(string)) { CanNull = false }
-        );
-
-        await _db.CreateTable(
-            "tasks",
-            true,
-            new DbParam("id", typeof(int)) { PrimaryKey = true, Unique = true, AutoIncrement = true },
-            new DbParam("title", typeof(string)) { CanNull = false },
-            new DbParam("description", typeof(string)) { CanNull = true },
-            new DbParam("full_description", typeof(string)) { CanNull = true },
-            new DbParam("count_attempts", typeof(int)) { CanNull = false },
-            new DbParam("all", typeof(bool)) { CanNull = false },
-            new DbParam("task_items_ids", typeof(string)) { CanNull = false }
         );
 
         await _db.CreateTable(
