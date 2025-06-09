@@ -472,7 +472,7 @@ public class MobileController(
             var taskItem = new TaskItem()
             {
                 Question = item.Fields.GetString("question"),
-                AnswerOptions = new List<AnswerOption>(options.Count)
+                AnswerOptions = options.Select(x => { x.IsCorrect = false; return x; }).ToList()
             };
 
             taskItems.Add(taskItem);
